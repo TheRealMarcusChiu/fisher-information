@@ -28,7 +28,7 @@ function generate_data_sets(random_x_values=[], std=1) {
 }
 
 class Plot {
-    constructor(svg_id, margin, width, height, x_domain=[-10,10], y_domain=[-10,10]) {
+    constructor(title, svg_id, margin, width, height, x_domain=[-10,10], y_domain=[-10,10]) {
         this.margin = margin
         this.width = width
         this.height = height
@@ -38,6 +38,12 @@ class Plot {
             .attr("height", height + margin.top + margin.bottom)
           .append("g")
             .attr("transform", `translate(${margin.left}, ${margin.top})`);
+        this.svg
+            .append("text")
+            .attr("text-anchor", "start")
+            .attr("y", -5)
+            .attr("x", 0)
+            .text(title);
         this.x = d3.scaleLinear()
             .domain(x_domain)
             .range([ 0, width ]);
@@ -117,10 +123,19 @@ class Plot {
 }
 
 class PlotHistogram {
-    constructor(svg_id, margin, width, height, x_domain=[-10,10], y_domain=[-10,10]) {
-        this.svg = d3.select(svg_id)
+    constructor(title, svg_id, margin, width, height, x_domain=[-10,10], y_domain=[-10,10]) {
+        this.svg = d3
+          .select(svg_id)
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
+          .append("g")
+            .attr("transform", `translate(${margin.left}, ${margin.top})`);
+        this.svg
+            .append("text")
+            .attr("text-anchor", "start")
+            .attr("y", -5)
+            .attr("x", 0)
+            .text(title);
         this.x = d3.scaleLinear()
             .domain(x_domain)
             .range([margin.left, width - margin.right]);
@@ -177,13 +192,13 @@ class PlotHistogram {
     }
 }
 
-const margin = {top: 10, right: 30, bottom: 30, left: 60}
+const margin = {top: 40, right: 30, bottom: 30, left: 60}
 const width = 460 - margin.left - margin.right
 const height = 400 - margin.top - margin.bottom;
-const plot1 = new Plot("#plot1", margin, width, height, [-10, 10], [-5, 0]);
-const plot2 = new PlotHistogram("#plot2", margin, width, height, [-10, 0], [0, 0.5]);
-const plot3 = new Plot("#plot3", margin, width, height, [-10, 10], [-10, 10]);
-const plot4 = new PlotHistogram("#plot4", margin, width, height, [-10, 10], [0, 0.5]);
+const plot1 = new Plot("Log Normal", "#plot1", margin, width, height, [-10, 10], [-5, 0]);
+const plot2 = new PlotHistogram("Distribution of Log Normal", "#plot2", margin, width, height, [-10, 0], [0, 0.5]);
+const plot3 = new Plot("𝛿/𝛿𝜇 Log Normal", "#plot3", margin, width, height, [-10, 10], [-10, 10]);
+const plot4 = new PlotHistogram("Distribution of 𝛿/𝛿𝜇 Log Normal", "#plot4", margin, width, height, [-10, 10], [0, 0.5]);
 var mean = document.getElementById("slider_mean").value;
 var std = document.getElementById("slider_std").value;
 var num_random_values = document.getElementById("slider_num_samples").value
