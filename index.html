@@ -35,6 +35,18 @@
 <body>
     <a href="https://www.youtube.com/watch?v=pneluWj-U-o">Fisher Information - YouTube</a>
     <div>
+        <input type="range" min="-10" max="10" value="0" class="slider" id="slider_mean" step="0.1" oninput="this.nextElementSibling.value = this.value"> MEAN
+        <output>0</output>
+    </div>
+    <div>
+        <input type="range" min="0.5" max="10" value="2" class="slider" id="slider_std" step="0.1" oninput="this.nextElementSibling.value = this.value"> Standard Deviation
+        <output>2</output>
+    </div>
+    <div>
+        <input type="range" min="1" max="100" value="50" class="slider" id="slider_num_samples" oninput="this.nextElementSibling.value = this.value"> Number of Samples
+        <output>50</output>
+    </div>
+    <div>
         <svg id="plot1"></svg>
         <svg id="plot2"></svg>
     </div>
